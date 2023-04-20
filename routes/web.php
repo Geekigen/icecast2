@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ratingcontroller;
+use App\Models\Rate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +17,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $rating=Rate::all();
+    $rating_total=Rate::sum('rating');
+    
+            if ($rating->count()>0) {
+                $rating_value=$rating_total/$rating->count();
+            }
+           else {
+        $rating_value=0;
+                }
+
+
+    return view('welcome',compact('rating_value','rating'));
 });
 
 Route::get('/dashboard', function () {
