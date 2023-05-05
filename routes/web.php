@@ -31,8 +31,18 @@ Route::get('/', function () {
     return view('welcome',compact('rating_value','rating'));
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
+Route::get('/dashboard', function () { $rating=Rate::all();
+    $rating_total=Rate::sum('rating');
+    
+            if ($rating->count()>0) {
+                $rating_value=$rating_total/$rating->count();
+            }
+           else {
+        $rating_value=0;
+                }
+
+
+    return view('welcome',compact('rating_value','rating'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
