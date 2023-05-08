@@ -11,6 +11,7 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link href="{{asset('jplayer.blue.monday.min.css')}}" rel="stylesheet" type="text/css" />
+        <script src="https://cdn.ckeditor.com/ckeditor5/37.1.0/classic/ckeditor.js"></script>
         <script type="text/javascript" src="{{asset('jquery.min.js')}}"></script>
         <script type="text/javascript" src="{{asset('jquery.jplayer.js')}}"></script>
         <script type="text/javascript">
@@ -51,7 +52,7 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
             @include('layouts.navigation')
-
+            @livewireStyles
             <!-- Page Heading -->
             @if (isset($header))
                 <header class="bg-white dark:bg-gray-800 shadow">
@@ -67,5 +68,6 @@
                 {{ $slot }}
             </main>
         </div>
+        @livewireScripts
     </body>
 </html>
