@@ -24,8 +24,8 @@
       background-color: #4f93ce;
       color: white;
       font-weight: bold;
-      padding: 8px 16px;
-      border-radius:30%;
+      padding: 4px 8px;
+      border-radius:20%;
       border: 2px solid white;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
@@ -48,9 +48,11 @@
         <div class="flex">
           @guest
           <div class="login-buttons">
-            <a class="login-button" href="{{ route('login') }}">{{ __('Login') }}</a>
-            <a class="login-button" href="{{ route('register') }}">{{ __('Register') }}</a>
-          </div>
+            <button class="btn btn-sm btn-primary" type="submit"><a class="login-button text-sm px-2 py-1" href="{{ route('login') }}">{{ __('Login') }}</a></button>
+            <button class="btn btn-sm btn-secondary" type="submit"><a class="login-button text-sm px-2 py-1" href="{{ route('register') }}">{{ __('Register') }}</a></button>
+        </div>
+        
+        
           @endguest
           @if (Auth::check())
           @include('layouts.navigation')
