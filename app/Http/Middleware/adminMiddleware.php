@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class adminmiddleware
+class adminMiddleware
 {
     /**
      * Handle an incoming request.
@@ -15,6 +15,11 @@ class adminmiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $adminMail= Env('ADMIN_MAIL');
+        if ($request->user()->email != $adminMail ) {
+            return redirect()->back()->with('status',"Access denied ");
+
+        }
         return $next($request);
     }
 }

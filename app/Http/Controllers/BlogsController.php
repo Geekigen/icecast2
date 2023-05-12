@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
 class BlogsController extends Controller
@@ -11,7 +12,8 @@ class BlogsController extends Controller
      */
     public function index()
     {
-        //
+        $blogPosts = BlogPost::orderBy('created_at', 'desc')->paginate(10);
+        return view('blogs.index', compact('blogPosts'));
     }
 
     /**
@@ -35,16 +37,25 @@ class BlogsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $blogPost = BlogPost::findOrFail($id);
+        return view('blogs.show', compact('blogPost'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
     {
-        //
+        $blogPost = BlogPost::findOrFail($id);
+        return view('blogs.blogsedit', compact('blogPost'));
     }
+
 
     /**
      * Update the specified resource in storage.

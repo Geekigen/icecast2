@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\BlogPost;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -13,9 +14,69 @@ class BlogComponent extends Component
     public $title;
     public $content;
     public $image; 
+    public $blogId;
+    public function resetInputFields()
+    {
+        $this->title = '';
+        $this->content = '';
+        $this->image = null;
+        $this->blogId = null;
+    }
+
     public function render()
     {
-        return view('livewire.blog-component');
+        $blogs = BlogPost::all();
+
+        return view('livewire.blog-component', ['blogs' => $blogs]);
+        
+    }
+
+    public function create()
+    {
+        $validatedData = $this->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'required|image|max:1024',
+        ]);
+
+        $imageName = time() . '.' . $this->image->extension();
+        // $image->storeAs(public_path('images'), $name_gen, 'real_public');
+
+        $this->image->storeAs('public/images', $imageName);
+
+       BlogPost::create([
+            'title' => $this->title,
+            'content' => $this->content,
+            'image' => $imageName,
+        ]);
+
+        $this->resetInputFields();
+    }
+
+    public function edit($id)
+    {
+        $blog = BlogPost::findOrFail($id);
+
+        $this->blogId = $id;
+        $this->title = $blog->title;
+        $this->content = $blog->content;
+    }
+
+    public function update()
+    {
+        $validatedData = $this->validate([
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        $blog = BlogPost::find($this->blogId);
+
+        $blog->update([
+            'title' => $this->title,
+            'content' => $this->content,
+        ]);
+
+        $this->resetInputFields();
     }
 
     public function removeImage()
@@ -30,23 +91,12 @@ class BlogComponent extends Component
     }
     
 
-    public function save()
+    public function delete($id)
     {
-        $validatedData = $this->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'image' => 'required|image|max:1024', // Maximum file size of 1MB
-        ]);
+        $blog = BlogPost::findOrFail($id);
 
-        // Save the blog post to the database
-        // ...
-
-        // Upload the image file to the server
-        $imagePath = $this->image->store('public/images');
-
-        // ...
-
-        // Reset the input fields
-        $this->reset();
+        $blog->delete();
     }
+
+   
 }

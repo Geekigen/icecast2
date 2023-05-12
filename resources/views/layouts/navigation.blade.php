@@ -10,7 +10,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                   
+                    <button class="btn btn-sm btn-primary" type="submit"><a class="login-button text-sm px-2 py-1" href="/">{{ __('Home') }}</a></button>
                 </div>
             </div>
 
