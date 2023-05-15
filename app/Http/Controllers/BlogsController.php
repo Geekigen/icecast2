@@ -53,7 +53,7 @@ class BlogsController extends Controller
     public function edit($id)
     {
         $blogPost = BlogPost::findOrFail($id);
-        return view('blogs.blogsedit', compact('blogPost'));
+        return view('blogs.edit', compact('blogPost'));
     }
 
 
@@ -62,7 +62,22 @@ class BlogsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+            $validatedData = $request->validate([
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+        
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $image_name = time() . '.' . $image->getClientOriginalExtension();
+                $image->move(public_path('images'), $image_name);
+                $validatedData['image'] = $image_name;
+            }
+            $blogPost=BlogPost::where('id',$id);
+            $blogPost->update($validatedData);
+        
+            return redirect('/blog');
+        
+        
     }
 
     /**

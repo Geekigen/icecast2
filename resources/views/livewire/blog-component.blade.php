@@ -20,14 +20,7 @@
             <textarea wire:model="content" id="content" class="border border-gray-400 p-2 rounded-lg"></textarea>
             @error('content') <span class="error">{{ $message }}</span> @enderror
         </div>
-        <div class="flex flex-col space-y-2 {{ Request::is('create-blog') ? 'w-full' : 'w-1/8' }} sm:w-full">
-            <label for="image">Image</label>
-            <div class="relative border border-gray-400 p-2 rounded-lg">
-                <span class="text-gray-500">Click to upload blog photo</span>
-                <input type="file" wire:model="image" id="image" class="opacity-0 absolute inset-0 z-50">
-            </div>
-            @error('image') <span class="error">{{ $message }}</span> @enderror
-        </div>
+      
         
         
         <button type="submit" class="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">Create</button>
@@ -50,9 +43,11 @@
                 <tr>
                     <td class="border border-gray-400 p-2">{{ $blog->title }}</td>
                     <td class="border border-gray-400 p-2">{!! $blog->content !!}</td>
-                    <td class="border border-gray-400 p-2"><img src="{{ asset('storage/images/' . $blog->image) }}" alt="{{ $blog->title }}" width="100"></td>
+                    <td class="border border-gray-400 p-2"><img src="{{ asset('images/' . $blog->image) }}" alt="{{ $blog->title }}" width="100"></td>
                     <td class="border border-gray-400 p-2">
                         <button wire:click="edit({{ $blog->id }})" class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600">Edit</button>
+                        <button  class="bg-blue-500 text-white py-1 px-2 rounded hover:bg-blue-600"> <a href="/blog-posts/edit /{{ $blog->id }}">Add Image</a>
+                        </button>
                         <button wire:click="delete({{ $blog->id }})" class="bg-red-500 text-white py-1 px-2 rounded hover:bg-red-600">Delete</button>
                     </td>
                 </tr>

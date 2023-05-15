@@ -36,18 +36,17 @@ class BlogComponent extends Component
         $validatedData = $this->validate([
             'title' => 'required',
             'content' => 'required',
-            'image' => 'required|image|max:1024',
         ]);
 
-        $imageName = time() . '.' . $this->image->extension();
-        // $image->storeAs(public_path('images'), $name_gen, 'real_public');
+        // $imageName = time() . '.' . $this->image->extension();
+        // // $image->storeAs(public_path('images'), $name_gen, 'real_public');
 
-        $this->image->storeAs('public/images', $imageName);
+        // $this->image->storeAs('public/images', $imageName);
 
        BlogPost::create([
             'title' => $this->title,
             'content' => $this->content,
-            'image' => $imageName,
+            'image' => null,
         ]);
 
         $this->resetInputFields();

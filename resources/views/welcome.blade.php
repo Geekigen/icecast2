@@ -89,7 +89,7 @@
             @foreach ($latestBlogPosts as $blogPost)
                 <div class="border border-gray-300 rounded-lg p-4">
                     <div class="relative h-0" style="padding-bottom: 100%">
-                        <img class="absolute inset-0 w-full h-full object-cover rounded-full" src="{{ asset('storage/images/' . $blogPost->image) }}" alt="{{ $blogPost->title }}">
+                        <img class="absolute inset-0 w-full h-full object-cover rounded-full" src="{{ asset('images/' . $blogPost->image) }}" alt="{{ $blogPost->title }}">
                     </div>
                     <h2 class="text-2xl font-bold mt-4">{!! $blogPost->title !!}</h2>
                     <a href="{{ route('blog-posts.show', $blogPost) }}" class="block mt-4 text-blue-600 font-bold">Read More</a>
